@@ -1,8 +1,8 @@
 NAME = "camping"
 BRANCH = "2.1"
-GIT = ENV['GIT'] || "git"
+GIT = ENV["GIT"] || "git"
 REV = `#{GIT} rev-list HEAD`.strip.split.length
-VERS = ENV['VERSION'] || (REV.zero? ? BRANCH : [BRANCH, REV] * '.')
+VERS = ENV["VERSION"] || (REV.zero? ? BRANCH : [BRANCH, REV].join("."))
 
 RDOC_OPTS = ["--line-numbers", "--quiet", "--main", "README"]
 
@@ -13,19 +13,19 @@ def camping_spec
     s.platform = Gem::Platform::RUBY
     s.summary = "miniature rails for anyone"
     s.author = "why the lucky stiff"
-    s.email = 'why@ruby-lang.org'
-    s.homepage = 'http://camping.rubyforge.org/'
-    s.executables = ['camping']
+    s.email = "why@ruby-lang.org"
+    s.homepage = "http://camping.rubyforge.org/"
+    s.executables = ["camping"]
 
-    s.add_dependency('rack', '>=1.0')
-    s.add_dependency('mab', '>=0.0.3')
-    s.required_ruby_version = '>= 1.8.2'
+    s.add_dependency("rack", ">=1.0")
+    s.add_dependency("mab", ">=0.0.3")
+    s.required_ruby_version = ">= 1.8.2"
 
-    s.files = %w(COPYING README.md Rakefile) +
-      Dir.glob("{bin,doc,test,lib,extras,book}/**/*") +
-      Dir.glob("ext/**/*.{h,c,rb}") +
-      Dir.glob("examples/**/*.rb") +
-      Dir.glob("tools/*.rb")
+    s.files = ["COPYING", "README.md", "Rakefile"] +
+              Dir.glob("{bin,doc,test,lib,extras,book}/**/*") +
+              Dir.glob("ext/**/*.{h,c,rb}") +
+              Dir.glob("examples/**/*.rb") +
+              Dir.glob("tools/*.rb")
 
     s.require_path = "lib"
     s.bindir = "bin"
@@ -38,11 +38,10 @@ def camping_omni
     s.version = VERS
     s.platform = Gem::Platform::RUBY
     s.summary = "the camping meta-package for updating ActiveRecord, Mongrel and SQLite3 bindings"
-    %w[author email homepage rubyforge_project].each { |x| s.__send__("#{x}=", camping_spec.__send__(x)) }
+    ["author", "email", "homepage"].each { |x| s.__send__("#{x}=", camping_spec.__send__(x)) }
 
-    s.add_dependency('camping', ">=#{BRANCH}")
-    s.add_dependency('activerecord')
-    s.add_dependency('sqlite3', '>=1.1.0.1')
+    s.add_dependency("camping", ">=#{BRANCH}")
+    s.add_dependency("activerecord")
+    s.add_dependency("sqlite3", ">=1.1.0.1")
   end
 end
-
